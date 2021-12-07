@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+
+node
+yarn.lock
