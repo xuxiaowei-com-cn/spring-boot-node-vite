@@ -19,6 +19,10 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+	<modules>
+		<module>java-web</module>
+	</modules>
+
 	<build>
 
 		<!-- mvn clean source:jar javadoc:jar deploy -DskipTests -->
