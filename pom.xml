@@ -21,6 +21,7 @@
 
 	<modules>
 		<module>java-web</module>
+		<module>node-vite</module>
 	</modules>
 
 	<build>
