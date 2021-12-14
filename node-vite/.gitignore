@@ -40,3 +40,4 @@ dist-ssr
 
 node
 yarn.lock
+package-lock.json

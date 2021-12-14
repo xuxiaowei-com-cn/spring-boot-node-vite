@@ -1,0 +1,51 @@
+#
+# 日志 配置
+#
+logging:
+  # 日志等级
+  level:
+    cn.com.xuxiaowei: debug
+    # Spring Cloud 中无法使用 logging.level.web: debug
+    org.springframework.web: debug
+    org.springframework.security: debug
+  # 日志文件
+  file:
+    # 文件名及路径
+    # 注意：${spring.profiles.active[0]} 是取第一个激活的名称
+    # 由于使用了 ${spring.application.name}、${spring.profiles.active[0]} 与 bootstrap 优先级的问题，该配置无法在配置服务器上使用
+    # name: /logs/${spring.application.name}-${spring.profiles.active[0]}/${spring.application.name}-${spring.profiles.active[0]}.log
+    # 文件最大大小，单位: org.springframework.util.unit.DataSize
+    max-size: 20MB
+    #日志保存天数
+    max-history: 365
+  # 格式
+  pattern:
+    # 压缩文件命名
+    rolling-file-name: "${LOG_FILE}.%d{yyyy-MM-dd}.%i.log.gz"
+    # 控制台日志格式
+    # 默认值: %clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}
+    # LOG_LEVEL_PATTERN：日志等级
+    # -%5p：宽度
+    # PID：线程
+    console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %X{NAME} %clr(:){faint} %X{IP} %clr(:){faint} %X{serial} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+    # 日志文件格式
+    file: "%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %X{NAME} : %X{IP} : %X{serial} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+    # 日期时间格式
+    dateformat: "yyyy-MM-dd HH:mm:ss.SSS"
+#
+# Spring 配置
+spring:
+  # 数据源
+  datasource:
+    # 数据库驱动
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 数据库用户名
+    username: root
+    # 数据库密码
+    password: root
+    # 数据库链接
+    url: jdbc:mysql://127.0.0.1:3306/spring-boot-node-vite?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=UTF-8
+  # Thymeleaf 配置
+  thymeleaf:
+    # 是否启用缓存
+    cache: false

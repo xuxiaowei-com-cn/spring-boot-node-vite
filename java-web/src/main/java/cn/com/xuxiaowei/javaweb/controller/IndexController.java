@@ -21,7 +21,7 @@ public class IndexController {
      * @param request  请求
      * @param response 响应
      */
-    @RequestMapping("")
+    @RequestMapping(value = {"", "login"})
     public String path(HttpServletRequest request, HttpServletResponse response) {
 
         return "forward:index.html";

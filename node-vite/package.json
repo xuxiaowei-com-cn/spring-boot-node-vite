@@ -2,12 +2,16 @@
   "name": "node-vite",
   "version": "0.0.1",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.23"
+    "@element-plus/icons": "^0.0.11",
+    "axios": "^0.24.0",
+    "element-plus": "^1.2.0-beta.6",
+    "vue": "^3.2.23",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.10.2",
