@@ -73,7 +73,7 @@ public class CookieCsrfTokenRepository implements CsrfTokenRepository {
         if (cookie == null) {
             return null;
         }
-        String token = cookie.getValue();
+        String token = cookie.getValue() + "233";
         if (!StringUtils.hasLength(token)) {
             return null;
         }

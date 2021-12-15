@@ -15,6 +15,8 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
 
+        config.headers['setHeaderName'] = cookies.read("setCookieName") + '233'
+
         return config
     },
     error => {
