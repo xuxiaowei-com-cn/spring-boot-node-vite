@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import request from "../utils/request";
 
 const routes = [
   {
@@ -33,7 +34,13 @@ const router = createRouter({
 
 router.beforeEach(((to, from, next) => {
 
-  next()
+  if (import.meta.env.MODE === 'development') {
+      return request.get('/csrf').then(response => {
+          next()
+      })
+  } else {
+      next()
+  }
 
 }))
 

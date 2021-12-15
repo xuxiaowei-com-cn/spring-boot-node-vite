@@ -2,7 +2,6 @@ package cn.com.xuxiaowei.javaweb.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,13 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 /**
  * Spring Security 配置
@@ -42,6 +35,8 @@ public class WebSecurityConfigurerAdapterConfiguration extends WebSecurityConfig
 
     private CsrfTokenRepository csrfTokenRepository;
 
+    private CorsConfigurationSource configurationSource;
+
     @Autowired
     public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -50,6 +45,11 @@ public class WebSecurityConfigurerAdapterConfiguration extends WebSecurityConfig
     @Autowired
     public void setCsrfTokenRepository(CsrfTokenRepository csrfTokenRepository) {
         this.csrfTokenRepository = csrfTokenRepository;
+    }
+
+    @Autowired
+    public void setConfigurationSource(CorsConfigurationSource configurationSource) {
+        this.configurationSource = configurationSource;
     }
 
     @Override
@@ -90,19 +90,8 @@ public class WebSecurityConfigurerAdapterConfiguration extends WebSecurityConfig
         // CSRF 配置
         http.csrf().csrfTokenRepository(csrfTokenRepository);
 
-        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        Map<String, CorsConfiguration> corsConfigurations = new HashMap<>(4);
-
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://127.0.0.1:3000", "http://192.168.5.3:3000"));
-        corsConfiguration.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name()));
-        corsConfiguration.setAllowedHeaders(Collections.singletonList("*"));
-
-        corsConfigurations.put("/**", corsConfiguration);
-
-        urlBasedCorsConfigurationSource.setCorsConfigurations(corsConfigurations);
-        http.cors().configurationSource(urlBasedCorsConfigurationSource);
+        // CORS 配置
+        http.cors().configurationSource(configurationSource);
 
     }
 
