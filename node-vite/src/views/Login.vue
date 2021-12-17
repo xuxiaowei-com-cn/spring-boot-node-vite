@@ -72,7 +72,7 @@ export default {
 </script>
 
 <script setup>
-import {User, Key, Lock, Unlock} from '@element-plus/icons'
+import {User, Key, Lock, Unlock} from '@element-plus/icons-vue'
 </script>
 
 <style scoped>
