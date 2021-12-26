@@ -4,7 +4,6 @@ import cn.com.xuxiaowei.javaweb.authentication.SmsAbstractAuthenticationToken;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -117,13 +116,15 @@ public class SmsRestController {
             String password = "";
             User user = new User(username, password, authorities);
 
-//            // 创建短信验证码登录权限
+            // 创建短信验证码登录权限
             SmsAbstractAuthenticationToken smsAbstractAuthenticationToken = new SmsAbstractAuthenticationToken(
-                    sessionPhone, user, credentials, authorities);
+                    sessionPhone, user, null, credentials, authorities);
 
-            // 用于测试
-//            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-//                    new UsernamePasswordAuthenticationToken(user, credentials, authorities);
+            // 用于测试，不推荐使用
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                    new UsernamePasswordAuthenticationToken(user, credentials, authorities);
+            // 设置IP
+            usernamePasswordAuthenticationToken.setDetails(credentials);
 
             // 设置权限
             context.setAuthentication(smsAbstractAuthenticationToken);

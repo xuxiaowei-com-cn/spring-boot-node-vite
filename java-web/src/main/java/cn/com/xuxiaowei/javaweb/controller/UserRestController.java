@@ -41,17 +41,11 @@ public class UserRestController {
 
         String name = authentication.getName();
         Object details = authentication.getDetails();
+        // 本身为空
         Object credentials = authentication.getCredentials();
 
         if (details instanceof WebAuthenticationDetails) {
             WebAuthenticationDetails webAuthenticationDetails = (WebAuthenticationDetails) details;
-            String remoteAddress = webAuthenticationDetails.getRemoteAddress();
-            map.put("remoteAddress", remoteAddress);
-        }
-
-        // 用户
-        if (credentials instanceof WebAuthenticationDetails) {
-            WebAuthenticationDetails webAuthenticationDetails = (WebAuthenticationDetails) credentials;
             String remoteAddress = webAuthenticationDetails.getRemoteAddress();
             map.put("remoteAddress", remoteAddress);
         }

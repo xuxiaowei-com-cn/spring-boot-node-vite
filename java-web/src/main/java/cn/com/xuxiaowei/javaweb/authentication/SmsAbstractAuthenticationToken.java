@@ -4,8 +4,10 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 /**
@@ -19,7 +21,9 @@ public class SmsAbstractAuthenticationToken extends AbstractAuthenticationToken 
 
     private final UserDetails principal;
 
-    private final WebAuthenticationDetails credentials;
+    private final Object credentials;
+
+    private final WebAuthenticationDetails details;
 
     private final String phone;
 
@@ -27,16 +31,19 @@ public class SmsAbstractAuthenticationToken extends AbstractAuthenticationToken 
      * Creates a token with the supplied array of authorities.
      *
      * @param phone       手机号
-     * @param credentials 用户信息
-     * @param principal   IP等
+     * @param principal   用户信息
+     * @param credentials null
+     * @param details     IP等，参见：{@link UsernamePasswordAuthenticationFilter#setDetails(HttpServletRequest, UsernamePasswordAuthenticationToken)}
      * @param authorities the collection of <tt>GrantedAuthority</tt>s for the principal
      *                    represented by this authentication object.
      */
-    public SmsAbstractAuthenticationToken(String phone, UserDetails principal, WebAuthenticationDetails credentials,
+    public SmsAbstractAuthenticationToken(String phone, UserDetails principal, Object credentials,
+                                          WebAuthenticationDetails details,
                                           Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;
+        this.details = details;
         this.phone = phone;
 
         // 必须设置
@@ -44,8 +51,13 @@ public class SmsAbstractAuthenticationToken extends AbstractAuthenticationToken 
     }
 
     @Override
-    public WebAuthenticationDetails getCredentials() {
+    public Object getCredentials() {
         return credentials;
+    }
+
+    @Override
+    public WebAuthenticationDetails getDetails() {
+        return details;
     }
 
     @Override
